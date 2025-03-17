@@ -1,0 +1,127 @@
+@layer theme, base, antd, components , utilities;
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-primary: #1f55a2;
+  --color-error: #e34458;
+  --color-grey: #fafafa;
+  --color-quinary: #141414;
+  --color-white: #ffffff;
+  --color-black: #1f1f1f;
+}
+
+@layer base {
+  body {
+    margin: 0;
+  }
+
+  @font-face {
+    font-family: "Rubik";
+    font-weight: 300;
+    font-style: normal;
+    src: url("./assets/fonts/Rubik-Light.ttf") format("truetype");
+  }
+
+  @font-face {
+    font-family: "Rubik";
+    font-weight: 300;
+    font-style: italic;
+    src: url("./assets/fonts/Rubik-LightItalic.ttf") format("truetype");
+  }
+
+  @font-face {
+    font-family: "Rubik";
+    font-weight: 400;
+    font-style: normal;
+    src: url("./assets/fonts/Rubik-Regular.ttf") format("truetype");
+  }
+
+  @font-face {
+    font-family: "Rubik";
+    font-weight: 400;
+    font-style: italic;
+    src: url("./assets/fonts/Rubik-Italic.ttf") format("truetype");
+  }
+
+  @font-face {
+    font-family: "Rubik";
+    font-weight: 500;
+    font-style: normal;
+    src: url("./assets/fonts/Rubik-Medium.ttf") format("truetype");
+  }
+
+  @font-face {
+    font-family: "Rubik";
+    font-weight: 500;
+    font-style: italic;
+    src: url("./assets/fonts/Rubik-MediumItalic.ttf") format("truetype");
+  }
+
+  @font-face {
+    font-family: "Rubik";
+    font-weight: 600;
+    font-style: normal;
+    src: url("./assets/fonts/Rubik-SemiBold.ttf") format("truetype");
+  }
+
+  @font-face {
+    font-family: "Rubik";
+    font-weight: 600;
+    font-style: italic;
+    src: url("./assets/fonts/Rubik-SemiBoldItalic.ttf") format("truetype");
+  }
+
+  @font-face {
+    font-family: "Rubik";
+    font-weight: 700;
+    font-style: normal;
+    src: url("./assets/fonts/Rubik-Bold.ttf") format("truetype");
+  }
+
+  @font-face {
+    font-family: "Rubik";
+    font-weight: 700;
+    font-style: italic;
+    src: url("./assets/fonts/Rubik-BoldItalic.ttf") format("truetype");
+  }
+
+  @font-face {
+    font-family: "Rubik";
+    font-weight: 800;
+    font-style: normal;
+    src: url("./assets/fonts/Rubik-ExtraBold.ttf") format("truetype");
+  }
+
+  @font-face {
+    font-family: "Rubik";
+    font-weight: 800;
+    font-style: italic;
+    src: url("./assets/fonts/Rubik-ExtraBoldItalic.ttf") format("truetype");
+  }
+
+  @font-face {
+    font-family: "Rubik";
+    font-weight: 900;
+    font-style: normal;
+    src: url("./assets/fonts/Rubik-Black.ttf") format("truetype");
+  }
+
+  @font-face {
+    font-family: "Rubik";
+    font-weight: 900;
+    font-style: italic;
+    src: url("./assets/fonts/Rubik-BlackItalic.ttf") format("truetype");
+  }
+}
+
+@layer components {
+  .sider-menu {
+    color: inherit;
+
+    .ant-menu-item-selected {
+      color: var(--color-white);
+      background-color: var(--color-primary);
+    }
+  }
+}
