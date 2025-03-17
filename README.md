@@ -1,5 +1,5 @@
 ---
-Intructions
+Instructions
 ---
 
 - Clone this repo
