@@ -1,5 +1,5 @@
 export const MESSAGES = {
-  add: "Data berhasil ditambah",
-  edit: "Data berhasil diperbarui",
-  delete: "Data berhasil dihapus",
+  CREATE: "Data berhasil ditambah",
+  UPDATE: "Data berhasil diperbarui",
+  DELETE: "Data berhasil dihapus",
 };
