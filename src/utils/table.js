@@ -126,3 +126,15 @@ const triggerFilterOnInput = (
     }, debounce);
   }
 };
+
+export const filtersBeauty = (value, result = null) => {
+  Object.keys(value).map((key) => {
+    if (value?.[key]) {
+      result = result
+        ? { [key]: value?.[key] }
+        : { ...result, [key]: value?.[key] };
+    }
+  });
+
+  return result;
+};
