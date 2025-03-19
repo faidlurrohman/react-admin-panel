@@ -9,11 +9,11 @@ cd react-admin-panel
 ```
 
 ```bash
-yarn install || npm install
+yarn install
 ```
 
 ```bash
-yarn dev || npm run dev
+yarn dev
 ```
 
 ## 🔗 Links
