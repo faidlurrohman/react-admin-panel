@@ -13,6 +13,10 @@ yarn install
 ```
 
 ```bash
+cp .env_example .env
+```
+
+```bash
 yarn dev
 ```
 
