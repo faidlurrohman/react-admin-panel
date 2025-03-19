@@ -34,8 +34,8 @@ export default function Product() {
   };
 
   const _reload = useCallback(() => {
-    _getRecords({ ...pagination, filters });
-  }, []);
+    _getRecords({ ...tables, filters });
+  }, [tables, filters]);
 
   const _clear = useCallback(() => {
     setFilters(null);
