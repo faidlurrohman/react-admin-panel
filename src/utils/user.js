@@ -1,14 +1,14 @@
 import { UserOutlined } from "@ant-design/icons";
 import { upper } from "./typography";
 
-export const avatar = (data, image = false, result) => {
+export const avatar = (data, avatar = false, result) => {
   result = <UserOutlined />;
 
-  if (image && data?.image && typeof data?.image === "string") {
-    result = data?.image;
+  if (avatar && data?.avatar && typeof data?.avatar === "string") {
+    result = data?.avatar;
   }
 
-  if (!image && data?.username && typeof data?.username === "string") {
+  if (!avatar && data?.username && typeof data?.username === "string") {
     result = upper(data?.username.charAt(0));
   }
 
