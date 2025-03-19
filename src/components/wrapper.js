@@ -65,17 +65,17 @@ export default function Wrapper({ children }) {
   }, [location]);
 
   return (
-    <Layout className="h-screen">
+    <Layout>
       <Sider
         theme="light"
         width={280}
         trigger={null}
         collapsible
         collapsed={collapsed}
-        className="hidden lg:z-[1] lg:block lg:shadow-sm lg:overflow-auto lg:h-screen lg:top-0 lg:left-0 lg:sticky"
+        className="h-screen hidden lg:z-[11] lg:block lg:shadow-sm lg:overflow-auto lg:h-screen lg:top-0 lg:left-0 lg:sticky"
       >
         <div className="h-10 m-4 flex justify-center items-center">
-          <img src={IMAGE.LogoHere} alt="Not found" className="w-36" />
+          <img src={IMAGE.LOGO_HERE} alt="Not found" className="w-36" />
         </div>
         <Menu
           mode="inline"
@@ -90,7 +90,7 @@ export default function Wrapper({ children }) {
       <Drawer
         title={
           <div className="h-10 flex justify-center items-center">
-            <img src={IMAGE.LogoHere} alt="Not found" className="w-36" />
+            <img src={IMAGE.LOGO_HERE} alt="Not found" className="w-36" />
           </div>
         }
         closeIcon={<CloseOutlined />}
@@ -109,13 +109,13 @@ export default function Wrapper({ children }) {
           onOpenChange={_onOpenChange}
         />
       </Drawer>
-      <Layout>
+      <Layout className="min-h-screen">
         <Header
           collapsed={collapsed}
           setCollapsed={() => setCollapsed(!collapsed)}
           handleDrawer={_handleDrawer}
         />
-        <Content className="bg-white dark:bg-quinary p-2.5 m-2.5 rounded-md shadow-sm">
+        <Content className=" bg-white dark:bg-quinary p-4 m-2.5 rounded-md shadow-sm">
           {children}
         </Content>
         <Footer />
