@@ -73,7 +73,7 @@ export default function Header({ collapsed, setCollapsed, handleDrawer }) {
   }, []);
 
   return (
-    <HeaderAntd className="px-2.5 sticky top-0 w-full mt-2">
+    <HeaderAntd className="px-2.5 sticky top-0 w-full mt-2 z-[10]">
       <div className="flex justify-between h-full bg-white dark:bg-quinary shadow-sm rounded-md px-4">
         <div className="hidden relative items-center lg:grid">
           <Button
@@ -120,7 +120,7 @@ export default function Header({ collapsed, setCollapsed, handleDrawer }) {
                     <Avatar
                       size="small"
                       src={avatar(user, true)}
-                      shape="square"
+                      shape="circle"
                     >
                       {avatar(user)}
                     </Avatar>
@@ -155,7 +155,7 @@ export default function Header({ collapsed, setCollapsed, handleDrawer }) {
             arrow={{ pointAtCenter: true }}
             trigger={["click"]}
           >
-            <Avatar src={avatar(user, true)} shape="square">
+            <Avatar src={avatar(user, true)} shape="circle">
               {avatar(user)}
             </Avatar>
           </Dropdown>
