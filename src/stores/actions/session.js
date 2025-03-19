@@ -8,28 +8,27 @@ export const setSession = (payload) => ({ type: SET_SESSION, payload });
 export const login = (data) => (dispatch) => {
   dispatch(setLoading(true));
 
-  data = { ...data, expiresInMins: 1800 }; // optional from API
-
   return api
-    .post("/user/login", data)
+    .post("/auth/login", data)
     .then((response) => {
-      if (response?.status === 200) {
+      if (response?.status === 201) {
         Cookies.set(
           import.meta.env.VITE_APP_ACCESS_TOKEN,
-          response?.data?.accessToken,
+          response?.data?.access_token,
           // 30 days
           { expires: 30, sameSite: "Strict" }
         );
-        dispatch(getUser(response?.data?.id));
+
+        dispatch(getUser());
       }
     })
     .finally(() => dispatch(setLoading(false)));
 };
 
-export const getUser = (id) => async (dispatch) => {
+export const getUser = () => async (dispatch) => {
   try {
-    const user = await api.get(`/users/${id}`);
-    dispatch(setSession(user?.data));
+    const user = await api.get("/auth/profile");
+    dispatch(setSession({ ...user?.data, username: user?.data?.name }));
   } catch (error) {
     dispatch(setSession(null));
   }

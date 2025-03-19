@@ -15,11 +15,11 @@ export default function Login() {
     dispatch(login(params));
 
     if (params?.remember) {
-      localStorage.setItem("sk-u", params?.username || "");
+      localStorage.setItem("sk-e", params?.email || "");
       localStorage.setItem("sk-p", params?.password || "");
       localStorage.setItem("sk-c", params?.remember || false);
     } else {
-      localStorage.setItem("sk-u", "");
+      localStorage.setItem("sk-e", "");
       localStorage.setItem("sk-p", "");
       localStorage.setItem("sk-c", false);
     }
@@ -34,7 +34,7 @@ export default function Login() {
 
     if (remember && remember === "true") {
       form.setFieldsValue({
-        username: localStorage.getItem("sk-u"),
+        email: localStorage.getItem("sk-e"),
         password: localStorage.getItem("sk-p"),
         remember: true,
       });
@@ -61,7 +61,7 @@ export default function Login() {
               {import.meta.env.VITE_APP_NAME}
             </h1>
             <span className="text-xs pb-4 text-error">
-              username : emilys || password: emilyspass
+              email: john@mail.com || password: changeme
             </span>
             <div className="bg-white dark:bg-quinary rounded-lg px-4 pt-4 shadow-sm m-0 w-11/12 md:m-auto lg:m-auto md:w-1/2 lg:w-1/4">
               <Form
@@ -71,12 +71,12 @@ export default function Login() {
                 disabled={loading}
               >
                 <Form.Item
-                  label="Nama Pengguna"
-                  name="username"
+                  label="Email"
+                  name="email"
                   rules={[
                     {
                       required: true,
-                      message: "Nama Pengguna tidak boleh kosong",
+                      message: "Email tidak boleh kosong",
                     },
                   ]}
                 >
