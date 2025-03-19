@@ -1,28 +1,21 @@
 import {
   AreaChartOutlined,
   DatabaseOutlined,
-  UserOutlined,
+  ProductOutlined,
 } from "@ant-design/icons";
 
 export const MENUS = [
   { key: "/", icon: <AreaChartOutlined />, label: "Dashboard", path: "/" },
   {
-    key: "master",
+    key: "/master",
     label: "Data Master",
-    type: "group",
+    icon: <DatabaseOutlined />,
     children: [
       {
-        key: "/master",
-        label: "Master",
-        icon: <DatabaseOutlined />,
-        children: [
-          {
-            key: "/master/user",
-            label: "Pengguna",
-            icon: <UserOutlined />,
-            path: "master/user",
-          },
-        ],
+        key: "/master/product",
+        label: "Produk",
+        icon: <ProductOutlined />,
+        path: "master/product",
       },
     ],
   },

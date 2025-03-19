@@ -6,7 +6,7 @@ import Protected from "./protected";
 import Unprotected from "./unprotected";
 
 // pages
-import { Dashboard, Login, NotFound, User } from "pages";
+import { Dashboard, Login, NotFound, Product } from "pages";
 import { Wrapper } from "components";
 
 // routers
@@ -33,7 +33,7 @@ const router = createBrowserRouter([
         </Wrapper>
       </Protected>
     ),
-    children: [{ path: "user", element: <User /> }],
+    children: [{ path: "product", element: <Product /> }],
   },
   // auth
   {

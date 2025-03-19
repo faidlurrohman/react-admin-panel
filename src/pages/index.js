@@ -8,4 +8,4 @@ export { default as Login } from "./auth/login";
 export { default as Dashboard } from "./dashboard";
 
 // master
-export { default as User } from "./master/user";
+export { default as Product } from "./master/product";
