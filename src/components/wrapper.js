@@ -51,9 +51,13 @@ export default function Wrapper({ children }) {
       else {
         setActiveMenu(menu?.keyPath);
         navigate(menu?.key);
+
+        if (isDrawerOpen) {
+          setIsDrawerOpen(false);
+        }
       }
     },
-    [activeMenu]
+    [activeMenu, isDrawerOpen]
   );
 
   const _handleDrawer = useCallback((value) => {
