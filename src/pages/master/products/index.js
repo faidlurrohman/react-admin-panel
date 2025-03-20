@@ -5,7 +5,7 @@ import { columns, filtersBeauty } from "utils";
 import { TABLES } from "constants";
 import { Clear, Reload } from "components";
 
-export default function Product() {
+export default function Products() {
   const [load, setLoad] = useState(true);
   const [records, setRecords] = useState([]);
 
@@ -93,6 +93,7 @@ export default function Product() {
             sorter,
             type: "int",
             width: 200,
+            render: (value) => <>${value}</>,
           },
         ])}
         rowKey={(record) => record?.id}

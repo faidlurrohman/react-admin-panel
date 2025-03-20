@@ -4,7 +4,7 @@ const initialstate = {
   original: {
     direction: "ltr",
     primary: "#1f55a2",
-    language: "id",
+    language: "id_ID",
     isDarkMode: false,
   },
   modified: {

@@ -1,6 +1,7 @@
 import {
   AreaChartOutlined,
   DatabaseOutlined,
+  OrderedListOutlined,
   ProductOutlined,
 } from "@ant-design/icons";
 
@@ -12,10 +13,16 @@ export const MENUS = [
     icon: <DatabaseOutlined />,
     children: [
       {
-        key: "/master/product",
+        key: "/master/products",
         label: "Produk",
         icon: <ProductOutlined />,
-        path: "master/product",
+        path: "master/products",
+      },
+      {
+        key: "/master/categories",
+        label: "Kategori",
+        icon: <OrderedListOutlined />,
+        path: "master/categories",
       },
     ],
   },

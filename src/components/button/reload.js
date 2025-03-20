@@ -3,7 +3,7 @@ import { LoadingOutlined, ReloadOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 
 export default function Reload({
-  title = "Perbarui Data",
+  title = "Perbarui",
   onClick,
   loading,
   ...rest

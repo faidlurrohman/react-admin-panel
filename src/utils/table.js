@@ -17,6 +17,7 @@ const generateColumn = ({
   type = "string",
   sorter,
   sorting = false,
+  render = () => null,
   ...rest
 }) => ({
   key,
@@ -24,11 +25,9 @@ const generateColumn = ({
   dataIndex: key,
   ellipsis: true,
   render: (value) => {
-    let showValue = value;
-
     return (
-      <Tooltip placement="topLeft" title={showValue}>
-        {showValue}
+      <Tooltip placement="topLeft" title={render(value) ?? value}>
+        {render(value) ?? value}
       </Tooltip>
     );
   },
