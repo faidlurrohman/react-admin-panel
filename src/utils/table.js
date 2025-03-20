@@ -2,8 +2,6 @@ import { SearchOutlined } from "@ant-design/icons";
 import { Input, InputNumber, Tooltip, Typography } from "antd";
 import { lower } from "./typography";
 
-let query;
-
 export const columns = (data, results = []) => {
   data?.map((item) => results.push(generateColumn(item)));
 
@@ -46,6 +44,13 @@ const generateColumn = ({
       <SearchOutlined className={`${filtered ? "text-primary" : undefined}`} />
     ),
     filteredValue: filters?.[key] || null,
+    filterDropdownProps: {
+      onOpenChange: (open) => {
+        if (open) {
+          setTimeout(() => ref.current?.focus(), 50);
+        }
+      },
+    },
   }),
   ...rest,
 });
@@ -61,17 +66,14 @@ const filterInput = ({
   switch (type) {
     case "string":
       return (
-        <div
-          className="p-2 min-w-40 flex flex-row gap-1"
-          onKeyDown={(e) => e.stopPropagation()}
-        >
+        <div className="p-2 min-w-40 flex flex-row gap-1">
           <Input
             ref={ref}
             className="min-w-40 max-w-56"
             placeholder={`Cari ${lower(title)}`}
             value={selectedKeys[0]}
             onChange={(e) =>
-              triggerFilterOnInput(confirm, setSelectedKeys, e.target.value)
+              setSelectedKeys(e?.target?.value ? [e?.target?.value] : [])
             }
             onPressEnter={() => confirm()}
           />
@@ -79,18 +81,14 @@ const filterInput = ({
       );
     case "int":
       return (
-        <div
-          className="p-2 min-w-40 flex flex-row gap-1"
-          onKeyDown={(e) => e.stopPropagation()}
-        >
+        <div className="p-2 min-w-40 flex flex-row gap-1">
           <InputNumber
             ref={ref}
             className="min-w-40 max-w-56"
             placeholder={`Cari ${lower(title)}`}
             value={selectedKeys[0]}
-            onChange={(e) =>
-              triggerFilterOnInput(confirm, setSelectedKeys, e, 0)
-            }
+            onChange={(e) => setSelectedKeys(e ? [e] : [])}
+            onPressEnter={() => confirm()}
           />
         </div>
       );
@@ -105,34 +103,12 @@ const filterInput = ({
   }
 };
 
-const triggerFilterOnInput = (
-  next,
-  set,
-  value,
-  treshold = 2,
-  debounce = 1000
-) => {
-  set(value ? [value] : []);
-
-  if (query) clearTimeout(query);
-
-  if (String(value)?.length > treshold) {
-    query = setTimeout(() => {
-      next();
-    }, debounce);
-  } else if (String(value)?.length === 0) {
-    query = setTimeout(() => {
-      next();
-    }, debounce);
-  }
-};
-
 export const filtersBeauty = (value, result = null) => {
   Object.keys(value).map((key) => {
-    if (value?.[key]) {
-      result = result
-        ? { [key]: value?.[key] }
-        : { ...result, [key]: value?.[key] };
+    if (value?.[key] && result) {
+      result = { ...result, [key]: value?.[key] };
+    } else if (value?.[key] && !result) {
+      result = { [key]: value?.[key] };
     }
   });
 
