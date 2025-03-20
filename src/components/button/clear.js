@@ -2,7 +2,12 @@ import React from "react";
 import { CloseOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 
-export default function Clear({ title = "Hapus Pencarian", onClick, loading }) {
+export default function Clear({
+  title = "Hapus Pencarian",
+  onClick,
+  loading,
+  ...rest
+}) {
   return (
     <Button
       variant="solid"
@@ -10,6 +15,7 @@ export default function Clear({ title = "Hapus Pencarian", onClick, loading }) {
       icon={<CloseOutlined />}
       onClick={onClick}
       disabled={loading}
+      {...rest}
     >
       {title}
     </Button>
