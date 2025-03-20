@@ -12,6 +12,7 @@ export default function Product() {
   const filterRef = useRef(null);
   const [tables, setTables] = useState(TABLES);
   const [filters, setFilters] = useState(null);
+  const [sorter, setSorter] = useState(null);
 
   const _getRecords = (params) => {
     setLoad(true);
@@ -28,17 +29,19 @@ export default function Product() {
       .finally(() => setLoad(false));
   };
 
-  const _onTableChange = (pagination, filters) => {
+  const _onTableChange = (pagination, filters, sorter) => {
     setFilters(filtersBeauty(filters));
-    _getRecords({ ...pagination, filters });
+    setSorter(sorter);
+    _getRecords({ ...pagination, filters, sorter });
   };
 
   const _reload = useCallback(() => {
-    _getRecords({ ...tables, filters });
-  }, [tables, filters]);
+    _getRecords({ ...tables, filters, sorter });
+  }, [tables, filters, sorter]);
 
   const _clear = useCallback(() => {
     setFilters(null);
+    setSorter(null);
     _getRecords(TABLES);
   }, []);
 
@@ -46,9 +49,13 @@ export default function Product() {
 
   return (
     <>
-      <div className="flex flex-col pb-3 space-y-2 sm:space-y-0 sm:space-x-2 sm:flex-row lg:space-y-0 lg:space-x-2 lg:flex-row">
-        <Reload onClick={_reload} laoding={load} />
-        {filters ? <Clear onClick={_clear} laoding={load} /> : null}
+      <div className="flex flex-1 gap-1 pb-3 flex-col sm:flex-row lg:flex-row">
+        <Reload onClick={_reload} loading={load} />
+        {filters && !load ? (
+          <div className="flex flex-col sm:flex-1 sm:items-end lg:flex-1 lg:items-end">
+            <Clear onClick={_clear} loading={load} />
+          </div>
+        ) : null}
       </div>
       <Table
         bordered
@@ -56,7 +63,6 @@ export default function Product() {
           scrollToFirstRowOnChange: true,
           x: "100%",
         }}
-        tableLayout="auto"
         loading={load}
         size="middle"
         dataSource={records}
@@ -67,6 +73,15 @@ export default function Product() {
             title: "Nama",
             filtering: true,
             filters,
+            width: 300,
+          },
+          {
+            ref: filterRef,
+            key: "description",
+            title: "Deskripsi",
+            filtering: true,
+            filters,
+            width: 600,
           },
           {
             ref: filterRef,
@@ -74,7 +89,10 @@ export default function Product() {
             title: "Harga",
             filtering: true,
             filters,
+            sorting: true,
+            sorter,
             type: "int",
+            width: 200,
           },
         ])}
         rowKey={(record) => record?.id}
