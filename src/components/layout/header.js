@@ -147,8 +147,8 @@ export default function Header({ collapsed, setCollapsed, handleDrawer }) {
   const _confirmLogout = useCallback(() => {
     dispatch(
       setConfirm({
-        title: "Keluar Aplikasi",
-        content: "Apakah anda yakin untuk melanjutkan ?",
+        title: t("common:_confirm.title_logout"),
+        content: t("common:_confirm.content_logout"),
         onOk() {
           dispatch(logout());
         },

@@ -44,4 +44,10 @@ export default {
     products: "Produk",
     categories: "Kategori",
   },
+  _confirm: {
+    ok: "Ya, lanjutkan",
+    cancel: "Batal",
+    title_logout: "Keluar",
+    content_logout: "Apakah anda yakin untuk melanjutkan ?",
+  },
 };

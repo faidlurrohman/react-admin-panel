@@ -44,4 +44,10 @@ export default {
     products: "Products",
     categories: "Categories",
   },
+  _confirm: {
+    ok: "Yes, continue",
+    cancel: "Cancel",
+    title_logout: "Logout",
+    content_logout: "Are you sure to continue ?",
+  },
 };

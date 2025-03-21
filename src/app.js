@@ -4,10 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { theme } from "utils";
 import { setInit, setConfirm, setToast } from "stores/actions/feedback";
 import { Loader } from "components";
+import { useTranslation } from "react-i18next";
 // routers
 import Routers from "routers";
 
 export default function App() {
+  const { t } = useTranslation();
   const [messageAntd, contextMessage] = message.useMessage();
   const [modalAntd, contextModal] = Modal.useModal();
   const dispatch = useDispatch();
@@ -43,8 +45,8 @@ export default function App() {
       modalAntd[confirm?.type ?? "confirm"]({
         title: confirm?.title ?? "Missing Title",
         content: confirm?.content ?? "Missing Content",
-        okText: confirm?.okText ?? "Ya, lanjutkan",
-        cancelText: confirm?.cancelText ?? "Tidak",
+        okText: confirm?.okText ?? t("common:_confirm.ok"),
+        cancelText: confirm?.cancelText ?? t("common:_confirm.cancel"),
         centered: true,
         onOk() {
           confirm?.onOk();
