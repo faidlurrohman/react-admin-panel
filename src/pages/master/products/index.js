@@ -4,8 +4,10 @@ import { getProducts } from "services/master";
 import { columns, filtersBeauty } from "utils";
 import { TABLES } from "constants";
 import { Clear, Reload } from "components";
+import { useTranslation } from "react-i18next";
 
 export default function Products() {
+  const { t } = useTranslation();
   const [load, setLoad] = useState(true);
   const [records, setRecords] = useState([]);
 
@@ -70,7 +72,7 @@ export default function Products() {
           {
             ref: filterRef,
             key: "title",
-            title: "Nama",
+            title: t("common:_column.name"),
             filtering: true,
             filters,
             width: 300,
@@ -78,7 +80,7 @@ export default function Products() {
           {
             ref: filterRef,
             key: "description",
-            title: "Deskripsi",
+            title: t("common:_column.description"),
             filtering: true,
             filters,
             width: 600,
@@ -86,7 +88,7 @@ export default function Products() {
           {
             ref: filterRef,
             key: "price",
-            title: "Harga",
+            title: t("common:_column.price"),
             filtering: true,
             filters,
             sorting: true,

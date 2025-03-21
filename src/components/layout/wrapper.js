@@ -3,9 +3,9 @@ import { Drawer, Layout, Menu } from "antd";
 import Header from "./header";
 import Footer from "./footer";
 import { IMAGE } from "constants";
-import { MENUS } from "constants";
 import { useLocation, useNavigate } from "react-router";
 import { CloseOutlined } from "@ant-design/icons";
+import { menu } from "utils";
 
 const { Content, Sider } = Layout;
 
@@ -20,7 +20,11 @@ export default function Wrapper({ children }) {
   const _onOpenChange = useCallback((keys) => {
     const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
 
-    if (MENUS.map(({ key }) => key).indexOf(latestOpenKey) === -1) {
+    if (
+      menu()
+        .map(({ key }) => key)
+        .indexOf(latestOpenKey) === -1
+    ) {
       setOpenKeys(keys);
     } else {
       setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
@@ -84,7 +88,7 @@ export default function Wrapper({ children }) {
         <Menu
           mode="inline"
           className="sider-menu border-r-0 p-2"
-          items={MENUS}
+          items={menu()}
           selectedKeys={activeMenu}
           onClick={_onClickMenu}
           openKeys={openKeys}
@@ -106,7 +110,7 @@ export default function Wrapper({ children }) {
         <Menu
           mode="inline"
           className="sider-menu border-r-0 p-2"
-          items={MENUS}
+          items={menu()}
           selectedKeys={activeMenu}
           onClick={_onClickMenu}
           openKeys={openKeys}

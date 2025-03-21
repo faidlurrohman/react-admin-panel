@@ -1,3 +1,4 @@
+import i18n from "translations";
 import {
   AreaChartOutlined,
   DatabaseOutlined,
@@ -5,22 +6,27 @@ import {
   ProductOutlined,
 } from "@ant-design/icons";
 
-export const MENUS = [
-  { key: "/", icon: <AreaChartOutlined />, label: "Dashboard", path: "/" },
+export const menu = () => [
+  {
+    key: "/",
+    icon: <AreaChartOutlined />,
+    label: i18n.t("common:_menu.dashboard"),
+    path: "/",
+  },
   {
     key: "/master",
-    label: "Data Master",
+    label: i18n.t("common:_menu.master"),
     icon: <DatabaseOutlined />,
     children: [
       {
         key: "/master/products",
-        label: "Produk",
+        label: i18n.t("common:_menu.products"),
         icon: <ProductOutlined />,
         path: "master/products",
       },
       {
         key: "/master/categories",
-        label: "Kategori",
+        label: i18n.t("common:_menu.categories"),
         icon: <OrderedListOutlined />,
         path: "master/categories",
       },

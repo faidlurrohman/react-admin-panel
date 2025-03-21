@@ -13,6 +13,8 @@ import customParseFormat from "dayjs/plugin/customParseFormat";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { persistor, store } from "./stores";
+// translations
+import "translations";
 /**
  * !!! TO DO
  * ? check new version of antd, currently not supporting React-19

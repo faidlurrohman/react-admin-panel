@@ -3,6 +3,7 @@ import Cookies from "js-cookie";
 import { store } from "stores";
 import { setLoading, setToast } from "stores/actions/feedback";
 import { logout } from "stores/actions/session";
+import i18n from "translations";
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_APP_BASE_URL,
@@ -49,8 +50,7 @@ api.interceptors.response.use(
       store.dispatch(
         setToast({
           severity: "error",
-          message:
-            "Tunggu beberapa saat lagi, server sedang memproses request.",
+          message: i18n.t("error:429"),
         })
       );
     } else if (error?.response?.status === 500) {

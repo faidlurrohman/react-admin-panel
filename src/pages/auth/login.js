@@ -1,14 +1,31 @@
 import { useCallback, useEffect } from "react";
-import { Form, Input, Button, Checkbox, Layout, Segmented } from "antd";
+import {
+  Form,
+  Input,
+  Button,
+  Checkbox,
+  Layout,
+  Segmented,
+  Dropdown,
+} from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "stores/actions/session";
 import { setSetting } from "stores/actions/setting";
-import { MoonOutlined, SunOutlined } from "@ant-design/icons";
+import {
+  MoonOutlined,
+  SunOutlined,
+  TranslationOutlined,
+} from "@ant-design/icons";
+import { LANGUAGES } from "constants";
+import { upper } from "utils";
+import Cookies from "js-cookie";
+import { useTranslation } from "react-i18next";
 
 export default function Login() {
+  const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
   const { loading } = useSelector((state) => state?.feedback);
-  const { modified } = useSelector((state) => state.setting);
+  const { theme, size, lang } = useSelector((state) => state.setting);
   const [form] = Form.useForm();
 
   const handleSubmit = (params) => {
@@ -26,8 +43,23 @@ export default function Login() {
   };
 
   const _toggleTheme = useCallback((value) => {
-    dispatch(setSetting({ isDarkMode: value === "dark" }));
+    dispatch(setSetting({ theme: value }));
   }, []);
+
+  const _handleLanguage = useCallback(
+    (value) => {
+      if (value?.key !== lang?.key) {
+        dispatch(
+          setSetting({
+            lang: { key: value?.key, locale: value?.locale },
+          })
+        );
+        Cookies.set(import.meta.env.VITE_APP_COOKIE_LANGUAGE, value?.key);
+        i18n.changeLanguage(value?.key);
+      }
+    },
+    [lang]
+  );
 
   useEffect(() => {
     const remember = localStorage.getItem("sk-c");
@@ -44,10 +76,26 @@ export default function Login() {
   return (
     <Layout className="flex flex-col">
       <div className="relative z-[1] overflow-hidden w-full h-screen">
-        <div className="absolute p-2 top-0 right-0 w-full z-[2] flex justify-end items-center">
+        <div className="absolute gap-2 p-2 top-0 right-0 w-full z-[2] flex justify-end items-center">
+          <Dropdown
+            menu={{
+              items: LANGUAGES.map((item) => ({
+                ...item,
+                onClick: () => _handleLanguage(item),
+              })),
+              selectable: true,
+              defaultSelectedKeys: [lang?.key ?? "id"],
+            }}
+            trigger={["click"]}
+          >
+            <Button shape="round" icon={<TranslationOutlined />}>
+              {upper(lang?.key)}
+            </Button>
+          </Dropdown>
           <Segmented
             shape="round"
-            value={modified?.isDarkMode ? "dark" : "light"}
+            value={theme}
+            size={size}
             options={[
               { value: "light", icon: <SunOutlined /> },
               { value: "dark", icon: <MoonOutlined /> },
@@ -61,7 +109,7 @@ export default function Login() {
               {import.meta.env.VITE_APP_NAME}
             </h1>
             <span className="text-xs pb-4 text-error">
-              email: john@mail.com || password: changeme
+              email: john@mail.com || pass: changeme
             </span>
             <div className="bg-white dark:bg-quinary rounded-lg px-4 pt-4 shadow-sm m-0 w-11/12 md:m-auto lg:m-auto md:w-1/2 lg:w-1/4">
               <Form
@@ -71,24 +119,28 @@ export default function Login() {
                 disabled={loading}
               >
                 <Form.Item
-                  label="Email"
+                  label={t("common:_label.email")}
                   name="email"
                   rules={[
                     {
                       required: true,
-                      message: "Email tidak boleh kosong",
+                      message: t(
+                        "common:Form.defaultValidateMessages.required"
+                      ),
                     },
                   ]}
                 >
                   <Input allowClear />
                 </Form.Item>
                 <Form.Item
-                  label="Kata Sandi"
+                  label={t("common:_label.password")}
                   name="password"
                   rules={[
                     {
                       required: true,
-                      message: "Kata Sandi tidak boleh kosong",
+                      message: t(
+                        "common:Form.defaultValidateMessages.required"
+                      ),
                     },
                   ]}
                 >
@@ -97,7 +149,7 @@ export default function Login() {
                 <div className="flex flex-row justify-between">
                   <Form.Item name="remember" valuePropName="checked">
                     <Checkbox className="checkbox-login">
-                      Pengingat Saya
+                      {t("common:_checkbox.remember")}
                     </Checkbox>
                   </Form.Item>
                   <Form.Item>
@@ -107,7 +159,7 @@ export default function Login() {
                       type="primary"
                       htmlType="submit"
                     >
-                      Masuk
+                      {t("common:_button.login")}
                     </Button>
                   </Form.Item>
                 </div>

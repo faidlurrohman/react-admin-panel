@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { ConfigProvider, message, Modal } from "antd";
-import id_ID from "antd/lib/locale/id_ID";
 import { useDispatch, useSelector } from "react-redux";
 import { theme } from "utils";
 import { setInit, setConfirm, setToast } from "stores/actions/feedback";
@@ -13,7 +12,14 @@ export default function App() {
   const [modalAntd, contextModal] = Modal.useModal();
   const dispatch = useDispatch();
   const { init, toast, confirm } = useSelector((state) => state?.feedback);
-  const { initial, modified } = useSelector((state) => state?.setting);
+  const {
+    direction,
+    primary_color,
+    theme: myTheme,
+    size,
+    radius,
+    lang,
+  } = useSelector((state) => state?.setting);
 
   // init
   useEffect(() => {
@@ -51,28 +57,35 @@ export default function App() {
     }
   }, [confirm]);
 
+  // settings - css color
   useEffect(() => {
-    if (modified?.primary) {
+    if (primary_color) {
       document.documentElement.style.setProperty(
         "--color-primary",
-        modified?.primary
+        primary_color
       );
     }
-    if (modified?.isDarkMode) {
+  }, [primary_color]);
+
+  // settings - dark mode
+  useEffect(() => {
+    if (myTheme === "dark") {
       document.body.classList.add("dark");
     } else {
       document.body.classList.remove("dark");
     }
-  }, [modified]);
+  }, [myTheme]);
 
   return (
     <ConfigProvider
       theme={theme(
         getComputedStyle(document.documentElement, null),
-        modified?.isDarkMode
+        radius,
+        myTheme
       )}
-      locale={id_ID}
-      direction={modified?.direction ?? initial?.direction}
+      locale={lang?.locale}
+      direction={direction}
+      componentSize={size}
     >
       {init ? (
         <Loader />

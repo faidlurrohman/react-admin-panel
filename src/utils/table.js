@@ -1,6 +1,7 @@
 import { SearchOutlined } from "@ant-design/icons";
 import { Input, InputNumber, Tooltip, Typography } from "antd";
 import { lower } from "./typography";
+import i18n from "translations";
 
 export const columns = (data, results = []) => {
   data?.map((item) => results.push(generateColumn(item)));
@@ -69,7 +70,7 @@ const filterInput = ({
           <Input
             ref={ref}
             className="min-w-40 max-w-56"
-            placeholder={`Cari ${lower(title)}`}
+            placeholder={`${i18n.t("common:_text.search")} ${lower(title)}`}
             value={selectedKeys[0]}
             onChange={(e) =>
               setSelectedKeys(e?.target?.value ? [e?.target?.value] : [])
@@ -84,7 +85,7 @@ const filterInput = ({
           <InputNumber
             ref={ref}
             className="min-w-40 max-w-56"
-            placeholder={`Cari ${lower(title)}`}
+            placeholder={`${i18n.t("common:_text.search")} ${lower(title)}`}
             value={selectedKeys[0]}
             onChange={(e) => setSelectedKeys(e ? [e] : [])}
             onPressEnter={() => confirm()}

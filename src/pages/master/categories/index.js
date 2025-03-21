@@ -4,8 +4,10 @@ import { getCategories } from "services/master";
 import { columns } from "utils";
 import { TABLES } from "constants";
 import { Reload } from "components";
+import { useTranslation } from "react-i18next";
 
 export default function Categories() {
+  const { t } = useTranslation();
   const [load, setLoad] = useState(true);
   const [records, setRecords] = useState([]);
 
@@ -43,11 +45,11 @@ export default function Categories() {
         columns={columns([
           {
             key: "name",
-            title: "Nama",
+            title: t("common:_column.name"),
           },
           {
             key: "slug",
-            title: "Slug",
+            title: t("common:_column.slug"),
           },
         ])}
         rowKey={(record) => record?.id}

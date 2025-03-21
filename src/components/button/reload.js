@@ -1,13 +1,11 @@
 import React from "react";
 import { LoadingOutlined, ReloadOutlined } from "@ant-design/icons";
 import { Button } from "antd";
+import { useTranslation } from "react-i18next";
 
-export default function Reload({
-  title = "Perbarui",
-  onClick,
-  loading,
-  ...rest
-}) {
+export default function Reload({ title, onClick, loading, ...rest }) {
+  const { t } = useTranslation();
+
   return (
     <Button
       variant="solid"
@@ -17,7 +15,7 @@ export default function Reload({
       onClick={onClick}
       {...rest}
     >
-      {title}
+      {title ?? t("common:_button.refresh")}
     </Button>
   );
 }
