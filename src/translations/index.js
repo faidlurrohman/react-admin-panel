@@ -6,8 +6,6 @@ import Cookies from "js-cookie";
 
 const LANGUAGES = { en, id };
 
-console.log("lang :>> ", LANGUAGES);
-
 i18n.use(initReactI18next).init({
   resources: LANGUAGES,
   lng: Cookies.get(import.meta.env.VITE_APP_COOKIE_LANGUAGE) ?? "id",
