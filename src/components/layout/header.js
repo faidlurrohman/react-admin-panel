@@ -6,6 +6,7 @@ import {
   Divider,
   Dropdown,
   Form,
+  InputNumber,
   Layout,
   Modal,
   Radio,
@@ -19,6 +20,7 @@ import {
   MoonOutlined,
   SettingOutlined,
   SunOutlined,
+  TranslationOutlined,
   UserOutlined,
 } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
@@ -26,13 +28,107 @@ import { avatar } from "utils";
 import { logout } from "stores/actions/session";
 import { setConfirm } from "stores/actions/feedback";
 import { setSetting } from "stores/actions/setting";
+import { LANGUAGES } from "constants";
 
 const { Header: HeaderAntd } = Layout;
+
+function SettingsModal({
+  form,
+  dispatch,
+  direction,
+  primary_color,
+  size,
+  radius,
+  isOpen,
+  handleModal,
+}) {
+  const _formChange = useCallback((event) => {
+    const { radius, target, metaColor } = event;
+
+    if (metaColor) {
+      dispatch(setSetting({ primary_color: metaColor?.toHexString() }));
+    }
+
+    if (target?.name === "direction") {
+      dispatch(setSetting({ direction: target?.value }));
+    }
+
+    if (target?.name === "size") {
+      dispatch(setSetting({ size: target?.value }));
+    }
+
+    if (![null, undefined].includes(radius)) {
+      dispatch(setSetting({ radius: radius }));
+    }
+  }, []);
+
+  return (
+    <Modal
+      centered
+      open={isOpen}
+      title="Pengaturan"
+      onCancel={() => handleModal(false)}
+      footer={[
+        <Button key="back" onClick={() => handleModal(false)}>
+          Kembali
+        </Button>,
+      ]}
+    >
+      <Divider />
+      <Form
+        form={form}
+        labelCol={{ span: 8 }}
+        initialValues={{
+          direction: direction,
+          size: size,
+          primary: primary_color,
+          radius: radius,
+        }}
+      >
+        <Form.Item name="direction" label="Tampilan">
+          <Radio.Group name="direction" onChange={_formChange}>
+            <Radio.Button key="ltr" value="ltr">
+              LTR
+            </Radio.Button>
+            <Radio.Button key="rtl" value="rtl">
+              RTL
+            </Radio.Button>
+          </Radio.Group>
+        </Form.Item>
+        <Form.Item name="size" label="Ukuran">
+          <Radio.Group name="size" onChange={_formChange}>
+            <Radio.Button key="small" value="small">
+              Kecil
+            </Radio.Button>
+            <Radio.Button key="middle" value="middle">
+              Sedang
+            </Radio.Button>
+            <Radio.Button key="large" value="large">
+              Besar
+            </Radio.Button>
+          </Radio.Group>
+        </Form.Item>
+        <Form.Item name="primary" label="Warna">
+          <ColorPicker showText onChangeComplete={_formChange} />
+        </Form.Item>
+        <Form.Item name="radius" label="Border Radius">
+          <InputNumber
+            min={0}
+            max={100}
+            onChange={(e) => _formChange({ radius: e })}
+          />
+        </Form.Item>
+      </Form>
+    </Modal>
+  );
+}
 
 export default function Header({ collapsed, setCollapsed, handleDrawer }) {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.session);
-  const { original, modified } = useSelector((state) => state.setting);
+  const { direction, primary_color, size, radius, theme } = useSelector(
+    (state) => state.setting
+  );
   const [settingModalOpen, setSettingModalOpen] = useState(false);
   const [form] = Form.useForm();
 
@@ -57,19 +153,7 @@ export default function Header({ collapsed, setCollapsed, handleDrawer }) {
   }, []);
 
   const _toggleTheme = useCallback((value) => {
-    dispatch(setSetting({ isDarkMode: value === "dark" }));
-  }, []);
-
-  const _formChange = useCallback((event) => {
-    const { target, metaColor } = event;
-
-    if (metaColor) {
-      dispatch(setSetting({ primary: metaColor?.toHexString() }));
-    }
-
-    if (target?.name === "direction") {
-      dispatch(setSetting({ direction: target?.value }));
-    }
+    dispatch(setSetting({ theme: value }));
   }, []);
 
   return (
@@ -90,10 +174,27 @@ export default function Header({ collapsed, setCollapsed, handleDrawer }) {
             onClick={() => handleDrawer(true)}
           />
         </div>
-        <div className="flex justify-center items-center text-end gap-4">
+        <div className="flex justify-center items-center text-end gap-2">
+          <Dropdown
+            menu={{
+              items: LANGUAGES.map((item) => ({
+                ...item,
+                onClick: () => dispatch(setSetting({ language: item?.key })),
+              })),
+              selectable: true,
+              // defaultSelectedKeys: [modified?.language ?? original?.language],
+            }}
+            trigger={["click"]}
+          >
+            <Button shape="round" icon={<TranslationOutlined />}>
+              {/* {upper(modified?.language ?? original?.language)} */}
+              ...
+            </Button>
+          </Dropdown>
           <Segmented
             shape="round"
-            value={modified?.isDarkMode ? "dark" : "light"}
+            value={theme ?? "light"}
+            size={size}
             options={[
               { value: "light", icon: <SunOutlined /> },
               { value: "dark", icon: <MoonOutlined /> },
@@ -161,41 +262,16 @@ export default function Header({ collapsed, setCollapsed, handleDrawer }) {
           </Dropdown>
         </div>
       </div>
-      <Modal
-        centered
-        open={settingModalOpen}
-        title="Pengaturan"
-        onCancel={() => _handleSettingModal(false)}
-        footer={[
-          <Button key="back" onClick={() => _handleSettingModal(false)}>
-            Kembali
-          </Button>,
-        ]}
-      >
-        <Divider />
-        <Form
-          form={form}
-          labelCol={{ span: 8 }}
-          initialValues={{
-            direction: modified?.direction ?? original?.direction,
-            primary: modified?.primary ?? original?.primary,
-          }}
-        >
-          <Form.Item name="direction" label="Tampilan">
-            <Radio.Group name="direction" onChange={_formChange}>
-              <Radio.Button key="ltr" value="ltr">
-                LTR
-              </Radio.Button>
-              <Radio.Button key="rtl" value="rtl">
-                RTL
-              </Radio.Button>
-            </Radio.Group>
-          </Form.Item>
-          <Form.Item name="primary" label="Warna">
-            <ColorPicker showText onChangeComplete={_formChange} />
-          </Form.Item>
-        </Form>
-      </Modal>
+      <SettingsModal
+        form={form}
+        isOpen={settingModalOpen}
+        handleModal={_handleSettingModal}
+        dispatch={dispatch}
+        direction={direction}
+        primary_color={primary_color}
+        size={size}
+        radius={radius}
+      />
     </HeaderAntd>
   );
 }

@@ -1,14 +1,10 @@
 // loader
 export { default as Loader } from "./loader";
 
-// wrapper
-export { default as Wrapper } from "./wrapper";
-
-// header
-export { default as Header } from "./header";
-
-// footer
-export { default as Footer } from "./footer";
+// layout
+export { default as Header } from "./layout/header";
+export { default as Wrapper } from "./layout/wrapper";
+export { default as Footer } from "./layout/footer";
 
 // button
 export { default as Add } from "./button/add";
